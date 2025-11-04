@@ -1,0 +1,267 @@
+.expert-selector-container {
+    width: 95%;
+    max-width: 1200px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+    position: relative;
+    margin: 20px auto;
+}
+
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 30px;
+    position: relative;
+}
+
+.header-title-section {
+    text-align: left;
+}
+
+.header h1 {
+    font-size: 32px;
+    margin: 0 0 15px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.header-icon {
+    flex-shrink: 0;
+}
+
+.header-title-text {
+    flex: 1;
+}
+
+.header p {
+    opacity: 0.9;
+    font-size: 16px;
+    margin: 0;
+    text-align: left;
+    margin-left: 0;
+}
+
+.header-actions {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.btn-admin {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-admin:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.main-content {
+    padding: 40px;
+}
+
+.expert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.expert-card {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 30px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.expert-card.selected {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.expert-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+}
+
+.expert-card:hover::before,
+.expert-card.selected::before {
+    transform: scaleX(1);
+}
+
+.expert-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.expert-checkbox {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #667eea;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    background: white;
+}
+
+.expert-checkbox.checked {
+    background: #667eea;
+    border-color: #667eea;
+}
+
+.expert-checkbox.checked::after {
+    content: '✓';
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.expert-icon {
+    font-size: 24px;
+    line-height: 1;
+    vertical-align: middle;
+    margin-bottom: 15px;
+}
+
+.expert-name {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.expert-skills {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.footer-actions {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px solid #e9ecef;
+    text-align: center;
+}
+
+.btn-start-analysis {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 15px 40px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s;
+    min-width: 200px;
+}
+
+.btn-start-analysis:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.btn-start-analysis:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.selected-count {
+    margin-top: 15px;
+    color: #666;
+    font-size: 14px;
+}
+
+.privacy-notice {
+    margin-top: 40px;
+    padding: 18px 25px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+.privacy-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.privacy-text {
+    color: white;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+    text-align: center;
+    opacity: 0.95;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    color: #666;
+    font-size: 16px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.empty-state-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .expert-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .header-actions {
+        position: static;
+        margin-top: 20px;
+    }
+}
+
