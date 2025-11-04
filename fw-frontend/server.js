@@ -1,7 +1,7 @@
 import app from './app.js';
 import config from './config/index.js';
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // 优雅关闭
 process.on('SIGTERM', () => {

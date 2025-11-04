@@ -86,6 +86,7 @@ if (isProduction) {
                     <body>
                         <h1>开发环境提示</h1>
                         <p>请访问 Vite 开发服务器：<a href="http://localhost:5173">http://localhost:5173</a></p>
+                        <p>或者访问前端服务器：<a href="http://localhost:3001">http://localhost:3001</a></p>
                         <p>或者运行 <code>npm run build</code> 构建项目后访问此地址</p>
                     </body>
                 </html>

@@ -137,7 +137,7 @@ FateWhisper/
    
    # 服务器配置
    HOST=0.0.0.0
-   PORT=8000
+   PORT=8001
    
    # Embedding 配置
    EMBEDDING=dashscope/text-embedding-v2
@@ -147,10 +147,10 @@ FateWhisper/
    ```bash
    python main.py
    # 或使用 uvicorn
-   uvicorn main:app --host 0.0.0.0 --port 8000
+   uvicorn main:app --host 0.0.0.0 --port 8001
    ```
 
-   后端服务将在 `http://localhost:8000` 启动
+   后端服务将在 `http://localhost:8001` 启动
 
 ### 前端部署
 
@@ -168,7 +168,7 @@ FateWhisper/
    
    编辑 `src/services/api.ts`，修改 `API_BASE` 为后端地址：
    ```typescript
-   const API_BASE = 'http://localhost:8000';
+   const API_BASE = 'http://localhost:8001';
    ```
 
 4. **启动开发服务器**
@@ -283,8 +283,8 @@ FateWhisper/
 
 启动后端服务后，访问以下地址查看 API 文档：
 
-- Swagger UI: `http://localhost:8000/docs`
-- ReDoc: `http://localhost:8000/redoc`
+- Swagger UI: `http://localhost:8001/docs`
+- ReDoc: `http://localhost:8001/redoc`
 
 ### 主要 API 端点
 
