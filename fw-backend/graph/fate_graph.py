@@ -7,7 +7,7 @@ from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.state import CompiledStateGraph
 
-from services.service_manager import service_manager
+from infrastructure.service_manager import service_manager
 from utils.custom_serializer import CustomSerializer
 from utils.unified_logger import get_logger
 from tools.bazi_tools import tian_gan_di_zhi

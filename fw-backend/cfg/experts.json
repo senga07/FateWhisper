@@ -7,7 +7,7 @@
     "icon": "📅",
     "required_fields": [
       {
-        "field_name": "出生日期",
+        "field_name": "出生日期（阴历）",
         "field_type": "datetime",
         "field_id": "birth_date"
       }

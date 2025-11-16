@@ -36,8 +36,12 @@ export const fortuneApi = {
     taskId: string,
     onComplete?: (result: AnalysisResult) => void
   ): Promise<AnalysisResult> => {
-    const expertParams = expertIds.map(id => `expert=${encodeURIComponent(id)}`).join('&');
-    const url = `${API_BASE}/fortune/analyze?${expertParams}&task_id=${encodeURIComponent(taskId)}`;
+    const expertParams = expertIds.length > 0 
+      ? expertIds.map(id => `expert=${encodeURIComponent(id)}`).join('&')
+      : '';
+    const url = expertParams 
+      ? `${API_BASE}/fortune/analyze?${expertParams}&task_id=${encodeURIComponent(taskId)}`
+      : `${API_BASE}/fortune/analyze?task_id=${encodeURIComponent(taskId)}`;
 
     const response = await fetch(url, {
       method: 'POST',
@@ -461,3 +465,4 @@ export const fortuneApi = {
     }
   },
 };
+

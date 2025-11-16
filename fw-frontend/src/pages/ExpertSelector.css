@@ -48,22 +48,29 @@
     position: absolute;
     top: 20px;
     right: 20px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
 }
 
 .btn-admin {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.25);
     color: white;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.4);
     border-radius: 8px;
     padding: 10px 20px;
     font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .btn-admin:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .main-content {
@@ -262,6 +269,7 @@
     .header-actions {
         position: static;
         margin-top: 20px;
+        justify-content: flex-start;
     }
 }
 

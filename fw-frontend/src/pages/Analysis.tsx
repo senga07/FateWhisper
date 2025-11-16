@@ -33,8 +33,10 @@ const Analysis: React.FC = () => {
     const [previews, setPreviews] = useState<Map<string, string>>(new Map());
     const [analysisStatus, setAnalysisStatus] = useState<string>('');
     const [receivedReports, setReceivedReports] = useState<Set<string>>(new Set());
+    const [progress, setProgress] = useState<number>(0);
     
     const resultSectionRef = useRef<HTMLDivElement>(null);
+    const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         if (expertIds.length > 0) {
@@ -44,12 +46,53 @@ const Analysis: React.FC = () => {
         }
     }, [expertIds.join(',')]);
 
-    // 当收到新报告时，滚动到底部
+    // 当收到新报告时，滚动到底部并自动选择第一个tab
     useEffect(() => {
-        if (resultSectionRef.current && Object.keys(expertResults).length > 0) {
-            resultSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        if (Object.keys(expertResults).length > 0) {
+            // 如果没有选中tab，自动选择第一个
+            if (!activeTab) {
+                const firstKey = Object.keys(expertResults)[0];
+                setActiveTab(firstKey);
+            }
+            
+            // 滚动到底部
+            if (resultSectionRef.current) {
+                resultSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
         }
     }, [expertResults]);
+
+    // 进度条逻辑：每秒增加1%，到99%时暂停
+    useEffect(() => {
+        if (analyzing) {
+            progressIntervalRef.current = setInterval(() => {
+                setProgress((prev) => {
+                    if (prev >= 99) {
+                        // 到达99%时暂停
+                        if (progressIntervalRef.current) {
+                            clearInterval(progressIntervalRef.current);
+                            progressIntervalRef.current = null;
+                        }
+                        return 99;
+                    }
+                    return prev + 1;
+                });
+            }, 1000); // 每秒增加1%
+        } else {
+            // 分析停止时清除定时器
+            if (progressIntervalRef.current) {
+                clearInterval(progressIntervalRef.current);
+                progressIntervalRef.current = null;
+            }
+        }
+
+        return () => {
+            if (progressIntervalRef.current) {
+                clearInterval(progressIntervalRef.current);
+                progressIntervalRef.current = null;
+            }
+        };
+    }, [analyzing]);
 
     const loadExpertInfo = async () => {
         try {
@@ -124,6 +167,7 @@ const Analysis: React.FC = () => {
             setAnalysisStatus('正在初始化分析...');
             setReceivedReports(new Set());
             setActiveTab(''); // 重置tab，等待第一个报告到达后自动设置
+            setProgress(0); // 重置进度条
             
             const formData = new FormData();
             
@@ -227,6 +271,7 @@ const Analysis: React.FC = () => {
                     // 如果分析完成，更新状态
                     if (completeResult.message === '分析完成') {
                         setAnalysisStatus('分析完成！');
+                        setProgress(100); // 进度条到100%
                         setAnalyzing(false);
                     }
                 }
@@ -234,6 +279,7 @@ const Analysis: React.FC = () => {
         } catch (err: any) {
             setError(`分析失败: ${err.message}`);
             setAnalysisStatus('');
+            setProgress(0);
             setAnalyzing(false);
         }
     };
@@ -382,6 +428,17 @@ const Analysis: React.FC = () => {
                         </button>
                         {analyzing && (
                             <div className="loading-indicator">
+                                <div className="progress-container">
+                                    <div className="progress-bar-wrapper">
+                                        <div 
+                                            className="progress-bar" 
+                                            style={{ width: `${progress}%` }}
+                                        />
+                                    </div>
+                                    <div className="progress-text">
+                                        {progress}%
+                                    </div>
+                                </div>
                                 {analysisStatus && (
                                     <div className="analysis-status">
                                         {analysisStatus}
@@ -428,27 +485,26 @@ const Analysis: React.FC = () => {
                                 </button>
                             );
                         })}
-                        {Object.keys(expertResults).length === 0 && (
-                            <div className="loading-content">
-                                <p>正在等待分析报告...</p>
-                            </div>
-                        )}
                     </div>
                     
                     {/* Tab 内容 - 统一展示所有报告 */}
                     <div className="result-content">
-                        {expertResults[activeTab] ? (
-                            <div className="markdown-content"
-                                dangerouslySetInnerHTML={{ __html: marked.parse(expertResults[activeTab].expert_report) }}
-                            />
-                        ) : (
-                            <div className="loading-content">
-                                <p>正在等待分析报告...</p>
-                                {Object.keys(expertResults).length > 0 && (
-                                    <p>已收到 {Object.keys(expertResults).length} 个报告</p>
-                                )}
-                            </div>
-                        )}
+                        {(() => {
+                            // 如果没有选中tab，自动选择第一个报告
+                            const currentTab = activeTab || Object.keys(expertResults)[0];
+                            const currentResult = expertResults[currentTab];
+                            
+                            if (currentResult) {
+                                return (
+                                    <div className="markdown-content"
+                                        dangerouslySetInnerHTML={{ __html: marked.parse(currentResult.expert_report) }}
+                                    />
+                                );
+                            }
+                            
+                            // 如果没有任何报告，显示空状态
+                            return null;
+                        })()}
                     </div>
                 </div>
             )}

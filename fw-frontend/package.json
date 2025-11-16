@@ -1,7 +1,7 @@
 {
   "name": "fate-whisper-frontend",
   "version": "1.0.0",
-  "description": "Fate Whisper Chat Frontend",
+  "description": "Fate Whisper Frontend",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -20,7 +20,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.0",
-    "marked": "^9.1.6"
+    "marked": "^9.1.6",
+    "parlant-chat-react": "^1.0.11"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",
@@ -32,10 +33,10 @@
     "vite": "^5.0.8"
   },
   "keywords": [
-    "chat",
     "ai",
     "langgraph",
-    "azure-openai"
+    "azure-openai",
+    "fortune-telling"
   ],
   "author": "senga07",
   "license": "MIT"
