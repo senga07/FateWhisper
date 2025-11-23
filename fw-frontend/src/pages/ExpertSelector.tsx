@@ -64,6 +64,12 @@ const ExpertSelector: React.FC = () => {
                     >
                         ⚙️ 专家管理
                     </button>
+                    <button 
+                        className="btn-admin" 
+                        onClick={() => navigate('/chat')}
+                    >
+                        💬 快速咨询
+                    </button>
                 </div>
                 <div className="header-title-section">
                     <h1>

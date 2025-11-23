@@ -2,6 +2,7 @@ import express from 'express';
 import expertController from '../controllers/expertController.js';
 import fortuneController from '../controllers/fortuneController.js';
 import healthController from '../controllers/healthController.js';
+import chatController from '../controllers/chatController.js';
 
 const router = express.Router();
 
@@ -17,6 +18,12 @@ router.delete('/expert/:expertId', expertController.delete);
 
 // 分析API
 router.post('/fortune/analyze', fortuneController.analyze);
+
+// 聊天API
+router.post('/chat/sessions', chatController.createSession);
+router.post('/chat/sessions/:sessionId/events', chatController.createEvent);
+router.get('/chat/sessions/:sessionId/events', chatController.listEvents);
+router.get('/chat/agent/info', chatController.getAgentInfo);
 
 export default router;
 

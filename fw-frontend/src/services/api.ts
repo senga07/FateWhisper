@@ -466,3 +466,59 @@ export const fortuneApi = {
   },
 };
 
+export const chatApi = {
+  createSession: async (agentId: string, customerId?: string, title?: string) => {
+    if (!agentId) {
+      throw new Error('agentId 是必需参数');
+    }
+    const response = await axios.post(`${API_BASE}/chat/sessions`, {
+      agent_id: agentId,
+      customer_id: customerId,
+      title: title,
+    });
+    return response.data;
+  },
+
+  createEvent: async (sessionId: string, agentId: string, kind: string, source: string, message?: string) => {
+    if (!agentId) {
+      throw new Error('agentId 是必需参数');
+    }
+    const response = await axios.post(`${API_BASE}/chat/sessions/${sessionId}/events`, {
+      agent_id: agentId,
+      kind,
+      source,
+      message,
+    });
+    return response.data;
+  },
+
+  listEvents: async (
+    sessionId: string,
+    agentId: string,
+    minOffset: number = 0,
+    waitForData: number = 30,
+    kinds?: string[]
+  ) => {
+    if (!agentId) {
+      throw new Error('agentId 是必需参数');
+    }
+    const params: any = {
+      agent_id: agentId,
+      min_offset: minOffset,
+      wait_for_data: waitForData,
+    };
+    if (kinds && kinds.length > 0) {
+      params.kinds = kinds;
+    }
+    const response = await axios.get(`${API_BASE}/chat/sessions/${sessionId}/events`, {
+      params,
+    });
+    return response.data;
+  },
+
+  getAgentInfo: async () => {
+    const response = await axios.get(`${API_BASE}/chat/agent/info`);
+    return response.data;
+  },
+};
+
